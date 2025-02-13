@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <h1>Recipe List</h1>
+    <h1>Recipe Book</h1>
 </head>
 <body>
     <ul>
         {% for recipe in recipes %}
-        <li>{{ recipe.name }}
+        <li><a href="/ledger{{ recipe.link }}">{{ recipe.name }}</a>
             <ul>
                 {% for ingredient in recipe.ingredients %}
-                <li>
-                {{ ingredient.name }}: {{ ingredient.quantity }}
-                </li>
-            {% endfor %}
+                <li> {{ ingredient.name }}: {{ ingredient.quantity }} </li>
+                {% endfor %}
             </ul>
         </li> 
         {% endfor %}
