@@ -1,3 +1,7 @@
+'''
+URL configuration for the ledger app. 
+'''
+
 from django.urls import path
 from .views import index, recipes, recipe1, recipe2
 
@@ -8,4 +12,4 @@ urlpatterns = [
     path('recipe/2', recipe2, name="recipe1"),
 ]
 
-app_name = "ledger"
+APP_NAME = "ledger"
