@@ -1,29 +1,25 @@
-from datetime import datetime
 from django.db import models
 from django.urls import reverse
 
-class TaskGroup(models.Model):
-    name = models.CharField(max_length=50)
-
-class Task(models.Model):
+class Ingredient(models.Model):
     name = models.CharField(max_length=100)
-    due_date = models.DateTimeField(null=False)
-    taskgroup = models.ForeignKey(
-        TaskGroup,
-        on_delete=models.CASCADE,
-        related_name='students'
-    )
 
     def __str__(self):
-        return '{}: due on {} unit(s)'.format(self.name, self.due_date)
+        return '{}'.format(self.name)
     def get_absolute_url(self):
-        return reverse('task_detail', args=[str(self.name)])
-    @property
-    def is_due(self):
-        return datetime.now() >= self.due_date
+        return reverse('ingredient_name', args=[str(self.name)])
+
+class Recipe(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return '{}'.format(self.name)
+    def get_absolute_url(self):
+        return reverse('recipe_name', args=[str(self.name)])
+
+class RecipeIngredient(models.Model):
+    quantity = models.IntegerField()
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+
     
-    class Meta:
-        ordering = ['due_date'] # order by due date ascending order
-        unique_together = ['due_date', 'name'] # Don't create a duplicate task
-        verbose_name = 'task'
-        verbose_name_plural = 'tasks'
