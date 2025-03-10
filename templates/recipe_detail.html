@@ -1,16 +1,23 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <h1>Recipe Book</h1>
+    <title>Recipe List</title>
 </head>
 <body>
-    <h2>{{ recipe.name }}</h2>
+    <header>
+        <h1>Recipe Book</h1>
+        {% if user.is_authenticated %}
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}"><button>Login</button></a>
+        {% endif %}
+    </header>
+    <hr>
+    <h3>{{ recipe.name }}</h3>
     <h4>by {{ recipe.author }}</h4>
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Logout</button>
-    </form>
     <ul>
         {% for ingredient in recipe.ingredients.all %}
         <li>

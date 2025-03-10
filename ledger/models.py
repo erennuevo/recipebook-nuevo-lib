@@ -20,7 +20,7 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     """Model for a recipe with name field."""
     name = models.CharField(max_length=100)
-    author = models.CharField(max_length=100)
+    author = models.CharField(max_length=100, default='Guest')
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
