@@ -6,6 +6,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
+
 class Ingredient(models.Model):
     """Model for an ingredient with name field."""
     name = models.CharField(max_length=100)
@@ -16,6 +17,7 @@ class Ingredient(models.Model):
     def get_absolute_url(self):
         """Returns the URL to access the detail view of this ingredient."""
         return reverse('ledger:ingredient_detail', args=[str(self.pk)])
+
 
 class Recipe(models.Model):
     """Model for a recipe with name field."""
@@ -31,8 +33,9 @@ class Recipe(models.Model):
         """Returns the URL to access the detail view of this recipe."""
         return reverse('ledger:recipe_detail', args=[str(self.pk)])
 
+
 class RecipeIngredient(models.Model):
-    """Model for a recipe ingredient, with quantity and keys to a recipe and ingredient."""
+    """Model for a recipe ingredient."""
     quantity = models.CharField(max_length=100)
     recipe = models.ForeignKey(
         Recipe,
@@ -44,6 +47,7 @@ class RecipeIngredient(models.Model):
         on_delete=models.CASCADE,
         related_name='recipe'
     )
+
 
 class Profile(models.Model):
     name = models.OneToOneField(User, on_delete=models.CASCADE, max_length=50)

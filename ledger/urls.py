@@ -1,5 +1,5 @@
 '''
-URL configuration for the ledger app. 
+URL configuration for the ledger app.
 '''
 
 from django.urls import path, include
