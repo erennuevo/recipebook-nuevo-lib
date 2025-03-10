@@ -4,6 +4,7 @@ Defines Ingredient, Recipe, and RecipeIngredient models.
 
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 class Ingredient(models.Model):
     """Model for an ingredient with name field."""
@@ -19,6 +20,9 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     """Model for a recipe with name field."""
     name = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return str(self.name)
@@ -40,3 +44,7 @@ class RecipeIngredient(models.Model):
         on_delete=models.CASCADE,
         related_name='recipe'
     )
+
+class Profile(models.Model):
+    name = models.OneToOneField(User, on_delete=models.CASCADE, max_length=50)
+    bio = models.TextField(blank=True)

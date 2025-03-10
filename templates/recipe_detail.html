@@ -5,6 +5,12 @@
 </head>
 <body>
     <h2>{{ recipe.name }}</h2>
+    <h4>by {{ recipe.author }}</h4>
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Logout</button>
+    </form>
     <ul>
         {% for ingredient in recipe.ingredients.all %}
         <li>
