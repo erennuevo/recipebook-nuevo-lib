@@ -19,10 +19,20 @@ class Ingredient(models.Model):
         return reverse('ledger:ingredient_detail', args=[str(self.pk)])
 
 
+class Profile(models.Model):
+    name = models.OneToOneField(User, on_delete=models.CASCADE, max_length=50)
+    bio = models.TextField(blank=True)
+
+
 class Recipe(models.Model):
     """Model for a recipe with name field."""
     name = models.CharField(max_length=100)
-    author = models.CharField(max_length=100, default='Guest')
+    author = models.ForeignKey(
+        User,
+        on_delete = models.SET_NULL,
+        null = True,
+        blank = True,
+    )
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
 
@@ -39,16 +49,11 @@ class RecipeIngredient(models.Model):
     quantity = models.CharField(max_length=100)
     recipe = models.ForeignKey(
         Recipe,
-        on_delete=models.CASCADE,
-        related_name='ingredients'
+        on_delete = models.CASCADE,
+        related_name = 'ingredients'
     )
     ingredient = models.ForeignKey(
         Ingredient,
-        on_delete=models.CASCADE,
-        related_name='recipe'
+        on_delete = models.CASCADE,
+        related_name = 'recipe'
     )
-
-
-class Profile(models.Model):
-    name = models.OneToOneField(User, on_delete=models.CASCADE, max_length=50)
-    bio = models.TextField(blank=True)
