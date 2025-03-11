@@ -19,11 +19,6 @@ class Ingredient(models.Model):
         return reverse('ledger:ingredient_detail', args=[str(self.pk)])
 
 
-class Profile(models.Model):
-    name = models.OneToOneField(User, on_delete=models.CASCADE, max_length=50)
-    bio = models.TextField(blank=True)
-
-
 class Recipe(models.Model):
     """Model for a recipe with name field."""
     name = models.CharField(max_length=100)
