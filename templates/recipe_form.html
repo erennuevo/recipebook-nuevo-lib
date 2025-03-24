@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <h2>Add a Recipe</h2>
+    <label>Recipe Name: </label>
+    <input id="name" type="text" name="name" maxlength="100" required/>
+    <br><br>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

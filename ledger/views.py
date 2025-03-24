@@ -2,8 +2,9 @@
 Django views that contain the contexts for each page.
 """
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Recipe
+from .forms import RecipeForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -14,7 +15,7 @@ def recipe_list(request):
     recipes = Recipe.objects.all()
 
     ctx = {
-        'recipes': recipes
+        'recipes': recipes,
     }
     return render(request, 'recipe_list.html', ctx)
 
@@ -28,3 +29,17 @@ def recipe_detail(request, id):
         'recipe': Recipe.objects.get(id=id)
     }
     return render(request, 'recipe_detail.html', ctx)
+
+
+@login_required
+def add_recipe(request):
+    form = RecipeForm()
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            recipe = form.save()
+            return redirect('ledger:recipe_detail', id=recipe.id)
+    ctx = { 
+        'form': form 
+    }
+    return render(request, 'recipe_form.html', ctx)
