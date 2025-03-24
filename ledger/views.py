@@ -41,8 +41,8 @@ def add_recipe(request):
             recipe.author = request.user
             recipe.save()
             return redirect('ledger:recipe_detail', id=recipe.id)
-    ctx = { 
-        'form': form 
+    ctx = {
+        'form': form
     }
     return render(request, 'recipe_form.html', ctx)
 
@@ -60,7 +60,7 @@ def add_image(request, id):
             image.recipe = recipe
             image.save()
             return redirect('ledger:recipe_detail', id=recipe.id)
-    ctx = { 
-        'form': form 
+    ctx = {
+        'form': form
     }
     return render(request, 'recipe_image.html', ctx)
