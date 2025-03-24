@@ -4,7 +4,7 @@ Django views that contain the contexts for each page.
 
 from django.shortcuts import render, redirect
 from .models import Recipe
-from .forms import RecipeForm
+from .forms import RecipeForm, ImageForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -38,8 +38,29 @@ def add_recipe(request):
         form = RecipeForm(request.POST)
         if form.is_valid():
             recipe = form.save()
+            recipe.author = request.user
+            recipe.save()
             return redirect('ledger:recipe_detail', id=recipe.id)
     ctx = { 
         'form': form 
     }
     return render(request, 'recipe_form.html', ctx)
+
+
+@login_required
+def add_image(request, id):
+
+    recipe = Recipe.objects.get(id=id)
+
+    form = ImageForm()
+    if request.method == 'POST':
+        form = ImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.recipe = recipe
+            image.save()
+            return redirect('ledger:recipe_detail', id=recipe.id)
+    ctx = { 
+        'form': form 
+    }
+    return render(request, 'recipe_image.html', ctx)

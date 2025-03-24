@@ -9,8 +9,14 @@
         {{ ingredient.ingredient.name }}: {{ ingredient.quantity }}
     </li>
     {% endfor %}
+    <br>
+    <a href="{% url 'ledger:add_image' recipe.id %}">
+        <button>Upload an Image</button>
+    </a>
+    <br><br>
     {% for image in recipe.image.all %}
-        <img src="{{ image.recipe_image.url }}" alt="{{ image.description }}">
+        <img src="{{ image.recipe_image.url }}" alt="{{ image.description }}" style="max-width: 60%;">
     {% endfor %}
+
 </ul>
 {% endblock %}
